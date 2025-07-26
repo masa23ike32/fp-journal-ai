@@ -4,7 +4,79 @@
   <meta charset="UTF-8">
   <title>FPライフプラン相談 | とんとん</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: "Helvetica Neue", "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+    header.hero {
+      background: linear-gradient(135deg, #0078D4 0%, #005EA2 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header.bg-blue-700 {
+      background-color: #0078D4;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .text-2xl { font-size: 1.5rem; font-weight: bold; }
+    .text-sm { font-size: 0.875rem; }
+    .section {
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      line-height: 1.7;
+      border: 1px solid #e0e4ea;
+    }
+    h2 {
+      color: #0078D4;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    ul {
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 20px;
+      background-color: #0078D4;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #005EA2;
+      transform: translateY(-2px);
+    }
+    footer {
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+    #license {
+      background-color: #fff8e1;
+      border: 1px solid #ffd54f;
+    }
+    #license h2 {
+      color: #ff9800;
+    }
+  </style>
 </head>
 <body>
 
@@ -14,31 +86,27 @@
   </header>
 
   <header class="bg-blue-700 text-white p-4 shadow-md">
-    <h1 class="text-2xl font-bold">📘 税制改正・FPニュース要約</h1>
+    <h1 class="text-2xl">📘 税制改正・FPニュース要約</h1>
     <p class="text-sm">最新の税制改正情報をAIが要約してお届け</p>
   </header>
 
-    <!-- 税制改正PDF -->
-    <section class="bg-white p-4 rounded shadow">
-      <h2 class="text-xl font-semibold mb-2">📄 税制改正PDF（財務省）</h2>
-      <p class="text-gray-700 mb-2">住宅ローン控除の対象拡大、iDeCo掛金上限の引き上げ、退職所得控除の調整規定の拡大などが盛り込まれました。</p>
-      <a href="https://www.mof.go.jp/tax_policy/publication/brochure/zeisei25.html" class="text-blue-600 underline">財務省公式PDFはこちら</a>
-    </section>
+  <section class="section">
+    <h2>📄 税制改正PDF（財務省）</h2>
+    <p>住宅ローン控除の対象拡大、iDeCo掛金上限の引き上げ、退職所得控除の調整規定の拡大などが盛り込まれました。</p>
+    <a href="https://www.mof.go.jp/tax_policy/publication/brochure/zeisei25.html" class="text-blue-600 underline">財務省公式PDFはこちら</a>
+  </section>
 
-    <!-- 国税庁ページ -->
-    <section class="bg-white p-4 rounded shadow">
-      <h2 class="text-xl font-semibold mb-2">🏛 国税庁 新着情報</h2>
-      <p class="text-gray-700 mb-2">令和7年分の類似業種比準価額、相続税評価、法人税通達の改正などが更新されています。</p>
-      <a href="https://www.nta.go.jp/information/news/news.htm" class="text-blue-600 underline">国税庁の新着情報一覧</a>
-    </section>
+  <section class="section">
+    <h2>🏛 国税庁 新着情報</h2>
+    <p>令和7年分の類似業種比準価額、相続税評価、法人税通達の改正などが更新されています。</p>
+    <a href="https://www.nta.go.jp/information/news/news.htm" class="text-blue-600 underline">国税庁の新着情報一覧</a>
+  </section>
 
-    <!-- FP関連ニュース -->
-    <section class="bg-white p-4 rounded shadow">
-      <h2 class="text-xl font-semibold mb-2">📰 FP関連ニュース（FP総研）</h2>
-      <p class="text-gray-700 mb-2">年収103万円の壁の見直し、特定扶養特別控除の導入、子育て世帯の住宅ローン減税延長など、個人課税中心の改正が注目されています。</p>
-      <a href="https://www.fp-soken.or.jp/fpnews/assets-fpnews/no986/" class="text-blue-600 underline">FP総研の解説記事</a>
-    </section>
-
+  <section class="section">
+    <h2>📰 FP関連ニュース（FP総研）</h2>
+    <p>年収103万円の壁の見直し、特定扶養特別控除の導入、子育て世帯の住宅ローン減税延長など、個人課税中心の改正が注目されています。</p>
+    <a href="https://www.fp-soken.or.jp/fpnews/assets-fpnews/no986/" class="text-blue-600 underline">FP総研の解説記事</a>
+  </section>
 
   <section class="section" id="overview">
     <h2>サービス概要</h2>
