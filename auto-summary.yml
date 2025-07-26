@@ -1,16 +1,15 @@
-name: Auto Summarize Tax Update
+name: Free Tier Auto Summary
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日9時（JST）実行（UTCで0時）
-  workflow_dispatch:      # 手動実行も可能
+    - cron: '0 0 * * 1'   # 毎週月曜午前9時（JST）実行
+  workflow_dispatch:       # 手動実行も可能
 
 jobs:
   summarize:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -19,19 +18,17 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install openai
 
-      - name: Run summarizer script
+      - name: Run summarizer
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python script/summarize.py
 
-      - name: Commit and push summary
+      - name: Commit and push
         run: |
-          git config --local user.name "${{ github.actor }}"
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
           git add summary.html
-          git commit -m "📝 Auto summary update: $(date '+%Y-%m-%d')"
+          git commit -m "Auto summary update (Free Tier)"
           git push
