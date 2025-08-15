@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お金スタイル動物診断</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f5; color: #1d3b34; margin: 0; padding: 0; }
+  header { background-color: #1d3b34; color: white; padding: 1rem; text-align: center; }
+  h1, h2 { color: #1d3b34; }
+  main { max-width: 800px; margin: auto; padding: 1.5rem; }
+  .question { margin-bottom: 2rem; }
+  button { background-color: #2e5d4d; color: white; padding: 0.8rem 1.2rem; border: none; border-radius: 5px; cursor: pointer; }
+  button:hover { background-color: #24493c; }
+  .result { background-color: white; border-radius: 8px; padding: 1rem; margin-top: 1.5rem; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+<header>
+  <h1>お金スタイル動物診断</h1>
+  <p>7つの質問に答えて、あなたのお金のタイプを診断します</p>
+</header>
+<main>
+  <div id="quiz"></div>
+  <div id="result" class="result" style="display:none;"></div>
+</main>
+<script>
+const questions = [
+  { q: "月々の家計管理はどのくらいしていますか？", a: [
+    { text: "毎月細かく記録", score: [2,0,0,0,0,1,0,0] },
+    { text: "ざっくり把握", score: [0,2,0,0,0,0,0,1] },
+    { text: "ほとんどしない", score: [0,0,0,0,1,0,0,2] },
+    { text: "家族と一緒にチェック", score: [0,0,0,0,0,0,2,0] }
+  ]},
+  { q: "お金の使い方で大事にしていることは？", a: [
+    { text: "将来のための貯蓄", score: [2,0,0,1,0,2,0,0] },
+    { text: "今の楽しみ優先", score: [0,2,0,0,1,0,0,2] },
+    { text: "必要な時に必要な分だけ", score: [0,1,2,0,0,0,1,0] },
+    { text: "家族や仲間との共有", score: [0,0,0,0,0,0,2,0] }
+  ]},
+  { q: "投資に対する考え方は？", a: [
+    { text: "低リスクでコツコツ", score: [2,0,0,1,0,1,0,0] },
+    { text: "中リスクでも積極的に", score: [0,2,1,0,2,0,0,0] },
+    { text: "全く興味がない", score: [0,0,0,0,0,0,0,2] },
+    { text: "専門家に任せる", score: [1,0,2,0,0,1,0,0] }
+  ]},
+  { q: "収入が増えたらどうしますか？", a: [
+    { text: "貯蓄や資産運用に回す", score: [2,0,0,1,0,2,0,0] },
+    { text: "旅行や趣味に使う", score: [0,2,0,0,1,0,0,2] },
+    { text: "事業や勉強に投資", score: [0,0,2,0,2,0,0,0] },
+    { text: "家族にプレゼント", score: [0,0,0,0,0,0,2,0] }
+  ]},
+  { q: "お金に関する情報収集は？", a: [
+    { text: "定期的にしている", score: [1,0,0,2,0,1,0,0] },
+    { text: "必要な時だけ", score: [0,2,2,0,1,0,0,1] },
+    { text: "ほとんどしない", score: [0,0,0,0,2,0,0,2] },
+    { text: "家族や友人から得る", score: [0,0,0,0,0,0,2,0] }
+  ]},
+  { q: "予想外の支出があったときは？", a: [
+    { text: "予備費でカバー", score: [2,0,0,1,0,2,0,0] },
+    { text: "臨時収入や貯金を崩す", score: [0,2,1,0,1,0,0,0] },
+    { text: "借入も検討する", score: [0,0,2,0,2,0,0,1] },
+    { text: "家族と相談する", score: [0,0,0,0,0,0,2,0] }
+  ]},
+  { q: "理想のお金との付き合い方は？", a: [
+    { text: "計画的で安心できる状態", score: [2,0,0,1,0,2,0,0] },
+    { text: "自由で制限のない状態", score: [0,2,0,0,1,0,0,2] },
+    { text: "挑戦できる環境", score: [0,0,2,0,2,0,0,0] },
+    { text: "家族も安心できる状態", score: [0,0,0,0,0,0,2,0] }
+  ]}
+];
+const animals = [
+  { name: "カメタイプ（堅実型）", desc: "コツコツ貯める慎重派。長期的安定を重視します。" },
+  { name: "ウサギタイプ（瞬発型）", desc: "チャンスを逃さない勢い型。ただし計画性に課題あり。" },
+  { name: "クマタイプ（長期戦型）", desc: "大きな目標に向けじっくり準備するタイプ。" },
+  { name: "キツネタイプ（工夫型）", desc: "節約や情報収集が得意なタイプ。" },
+  { name: "タカタイプ（チャレンジ型）", desc: "積極的に挑戦するがリスク管理は要注意。" },
+  { name: "リスタイプ（貯め込み型）", desc: "安心のために貯蓄優先。機会損失に注意。" },
+  { name: "ペンギンタイプ（協力型）", desc: "家族や仲間と一緒に計画する協調派。" },
+  { name: "ネコタイプ（マイペース型）", desc: "自分の満足感を優先する自由派。" }
+];
+let currentQ = 0, scores = Array(8).fill(0);
+const quizDiv = document.getElementById('quiz');
+function showQuestion(){
+  const q = questions[currentQ];
+  quizDiv.innerHTML = `<div class='question'><h2>Q${currentQ+1}. ${q.q}</h2>${q.a.map((opt,i)=>`<button onclick='answer(${i})'>${opt.text}</button>`).join('<br><br>')}</div>`;
+}
+function answer(i){
+  const s = questions[currentQ].a[i].score;
+  scores = scores.map((v,idx) => v + s[idx]);
+  currentQ++;
+  if(currentQ < questions.length){ showQuestion(); }
+  else { showResult(); }
+}
+function showResult(){
+  const maxIndex = scores.indexOf(Math.max(...scores));
+  const resultDiv = document.getElementById('result');
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = `<h2>あなたは「${animals[maxIndex].name}」です</h2><p>${animals[maxIndex].desc}</p>`;
+  quizDiv.innerHTML = '';
+}
+showQuestion();
+</script>
+</body>
+</html>
